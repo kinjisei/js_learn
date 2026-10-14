@@ -86,29 +86,64 @@ class User {
         this.#password = password;
     }
 
-    get_password() {
-        return this.#password
+    show_info() {
+        // console.log(`
+        //     Name: ${this.name}
+        //     Password: ${this.password}`)
+        throw new Error('Нереализован абстрактный метод!')
     }
 
-    set_password(password) {
-        if (password.length < 6) {
-            alert('Пароль должен быть не менее 6 символов')
-            throw new Error('Ошибка длины пароля')
-        }
-        this.#password = password;
-    }
+    // get_password() {
+    //     return this.#password
+    // }
+
+    // set_password(password) {
+    //     if (password.length < 6) {
+    //         alert('Пароль должен быть не менее 6 символов')
+    //         throw new Error('Ошибка длины пароля')
+    //     }
+    //     this.#password = password;
+    // }
 }
 
 
 user = new User('username', '1234')
 
-console.log(user.name);
-try {
-    user.set_password('4321');
+// console.log(user.name);
+// try {
+//     user.set_password('4321');
 
-} catch(error) {
-    console.log(error)
-    console.log(error.message)
+// } catch(error) {
+//     console.log(error)
+//     console.log(error.message)
+// }
+
+// console.log(user.get_password())
+
+
+class Students extends User {
+    constructor(name, password, grades) {
+        super(name, password);
+        this.grades = grades;
+    }
+
+    show_info() {
+        // super.show_info();
+        console.log(`grades: ${this.grades}`);
+    }
 }
 
-console.log(user.get_password())
+class Teacher extends User {
+
+}
+
+let users = [
+    new Students("student1", "12", [1, 2, , 3]),
+    new Students("student2", "12", [1, 2, , 3]),
+    new Students("student3", "12", [1, 2, , 3]),
+    new Teacher("teacher1", "12",)
+]
+
+users.forEach(function (user) {
+    user.show_info();
+})
