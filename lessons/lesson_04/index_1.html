@@ -16,12 +16,24 @@
         <input type="text" placeholder="Title" id="todoTitle" class="todoInput">
         <h3>Enter description:</h3>
         <input type="text" placeholder="description" id="todoDescription" class="todoInput">
-
+        <label for="completeCheckbox">
+            Completed
+            <input type="checkbox" id="completeCheckbox">
+        </label>
         <button id="addTodoButton">add</button>
 
 
     </div>
     <h2>Todo list:</h2>
+    <div class="mainInput">
+        <select id="filterSelect">
+            <option value="all">Все</option>
+            <option value="complited">Выполненые</option>
+            <option value="not_complited">Не выполненые</option>
+        </select>
+
+        <input type="text" id="filterSearch" placeholder="Введите название задачи">
+    </div>
     <div class="todoList">
         
     </div>

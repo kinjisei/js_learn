@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+    <h1>Todo List</h1>
+
+    <div class="mainInput">
+        <h3>Enter title:</h3>
+        <input type="text" placeholder="Title" id="todoTitle" class="todoInput">
+        <h3>Enter desctiption:</h3>
+        <input type="text" placeholder="Description" id="todoDescription" class="todoInput">
+        <label for="completeCheckbox">
+            Completed
+            <input type="checkbox" id="completeCheckbox">
+        </label>
+        <button id="addTodoButton">Add</button>
+    </div>
+
+    <h2>Todo List:</h2>
+
+    <div class="mainInput">
+        <select id="filterSelect">
+            <option value="all">Все</option>
+            <option value="completed">Выполненные</option>
+            <option value="not_completed">Не выполненные</option>
+        </select>
+        <input type="text" id="filterSearch" placeholder="Введите название задачи">
+    </div>
+
+    <h3>Todo count: <span id="todoCount">0</span></h3>
+
+    <div class="todoList">
+    </div>
+
+    <script src="js/script.js" type="module"></script>
+</body>
+
+</html>

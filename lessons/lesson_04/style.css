@@ -52,4 +52,13 @@ body {
     border: 1px solid gray;
     border-radius: 5px;
     margin: 30px 0;
+    color: white;
+}
+
+.true {
+    background-color: aquamarine;
+}
+
+.false {
+    background-color: red;
 }
