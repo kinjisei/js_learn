@@ -1,29 +1,41 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>auth</title>
+    <title>Авторизация</title>
     <link rel="stylesheet" href="css/auth.css">
 </head>
-<body>
-    <h1>Auth page</h1>
-    <a href="index.html">На главную</a>
 
-    <main>
-        <form id="authForm">
+<body>
+    <header class="navbar">
+        <a href="index.html" class="nav-link">На главную</a>
+        <a href="auth.html" class="nav-link active">Авторизация</a>
+    </header>
+
+    <main class="auth-container">
+        <form id="authForm" class="auth-form">
             <h2>Вход и регистрация</h2>
-            <input type="text" id="authLogin" placeholder="Введите логин" minlength="3" required>
-            <input type="password" id="authPassword" placeholder="Введите пароль" minlength="5" required>
-            <button type="subbmit" id="loginBtn">
-                Логин
-            </button>
-            <button type="subbmit" id="registerBtn"></buttontype>
-                Регистрация
-            </button>
-            <p id="authMessage"></p>
+            
+            <div class="input-group">
+                <input type="text" id="authLogin" placeholder="Введите логин" minlength="3" required autocomplete="username">
+            </div>
+
+            <div class="input-group">
+                <input type="password" id="authPassword" placeholder="Введите пароль" minlength="5" required autocomplete="current-password">
+            </div>
+
+            <div class="button-group">
+                <button type="submit" id="loginBtn" class="btn btn-primary">Войти</button>
+                <button type="button" id="registerBtn" class="btn btn-secondary">Регистрация</button>
+            </div>
+
+            <p id="authMessage" class="auth-message"></p>
         </form>
     </main>
+
     <script src="./js/authPage.js" type="module"></script>
 </body>
+
 </html>

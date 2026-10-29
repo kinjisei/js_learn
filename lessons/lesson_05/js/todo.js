@@ -12,12 +12,14 @@ const todoCount = document.querySelector('#todoCount');
 
 const todoList = document.querySelector(".todoList");
 
+const currentUserId = Number(localStorage.getItem('currentUserId')) || 'guest';
+const todo_key = `todos_${currentUserId}`
 
 function saveTodos() {
-    localStorage.setItem("todos", JSON.stringify(todos));
+    localStorage.setItem(todo_key, JSON.stringify(todos));
 }
 function loadTodos() {
-    let temp = JSON.parse(localStorage.getItem("todos"));
+    let temp = JSON.parse(localStorage.getItem(todo_key));
     if (!temp) {
         return [];
     }
@@ -79,4 +81,4 @@ function filter() {
 
 
 
-export { titleInput, todoList, filterSearch, filterSelect, addTodoBtn, completeCheckbox, descriptionInput, saveTodos, filter, renderTodos, loadTodos }
+export { titleInput, todoList, filterSearch, filterSelect, addTodoBtn, completeCheckbox, descriptionInput, saveTodos, filter, renderTodos, loadTodos, currentUserId }

@@ -1,5 +1,9 @@
-function getUsers() {
+export function getUsers() {
     return JSON.parse(localStorage.getItem('users')) || [];
+}
+
+export function logoutUser() {
+    localStorage.removeItem('currentUserId')
 }
 
 export function registerUser(username, password) {
@@ -7,18 +11,16 @@ export function registerUser(username, password) {
 
     const users = getUsers();
 
-    const existingUser = users.find(function(user) {
-        return user.username === username;
-    })
+    const existingUser = users.find(user => user.username === username);
     if (existingUser) {
-        throw new Error('Такой логин уже существует')
+        throw new Error('Такой логин уже существует');
     }
 
     const user = {
         id: Date.now(),
-        userName: username,
+        username: username,
         password: password
-    }
+    };
 
     users.push(user);
 
@@ -30,12 +32,12 @@ export function loginUser(username, password) {
     username = username.toLowerCase().trim();
 
     const users = getUsers();
-    user.find(function(user) {
-        return user.username === username && user.password === password;
-    });
-    if (!user) {
-        throw new Error('Логин или пароль не верный!');
+    
+    const foundUser = users.find(user => user.username === username && user.password === password);
+    
+    if (!foundUser) {
+        throw new Error('Логин или пароль неверный!');
     }
 
-    localStorage.setItem('currentUserId', user.id);
+    localStorage.setItem('currentUserId', foundUser.id);
 }

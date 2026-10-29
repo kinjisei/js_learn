@@ -1,6 +1,28 @@
-import { titleInput, todoList, filterSearch, filterSelect, addTodoBtn, completeCheckbox, descriptionInput, saveTodos, filter, renderTodos, loadTodos } from "./todo.js"
+import { titleInput, todoList, filterSearch, filterSelect, addTodoBtn, completeCheckbox, descriptionInput, saveTodos, filter, renderTodos, loadTodos, currentUserId } from "./todo.js"
+
+import { getUsers, logoutUser } from './auth.js'
 
 export let todos = loadTodos();
+
+const authLink = document.querySelector('#authLink')
+
+function start() {
+    const users = getUsers();
+    const user = users.find(function(user) {
+        return user.id === currentUserId;
+    })
+    if (!user) {
+        return;
+    }
+    authLink.textContent = `${user.username}, выйти`;
+
+
+    renderTodos(todos)
+}
+
+authLink.addEventListener('click', function() {
+    logoutUser();
+})
 
 
 addTodoBtn.addEventListener("click", function() {
@@ -64,4 +86,4 @@ todoList.addEventListener("click", function(event) {
 filterSelect.addEventListener("change", filter);
 filterSearch.addEventListener("input", filter);
 
-renderTodos(todos);
+start(todos);

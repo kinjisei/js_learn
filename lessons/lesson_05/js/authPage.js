@@ -15,12 +15,13 @@ authForm.addEventListener('submit', function(event) {
     authMessage.textContent = '';
     try {
         if (event.submitter.id === 'registerBtn'){
-            regidterUser(login, password);
+            registerUser(login, password);
         } else {
             loginUser(login, password);
         }
         window.location.href = './index.html'
     }catch (error) {
         authMessage.textContent = error.message;
+        console.log(error)
     }
 })
