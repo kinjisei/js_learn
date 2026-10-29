@@ -148,3 +148,92 @@ h3 {
     gap: 0.75rem;
     margin-top: 0.5rem;
 }
+
+/* Карточка отдельной задачи */
+.todoList .item {
+    background: #ffffff;
+    padding: 1.25rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    border-left: 4px solid #4f46e5;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.todoList .item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+}
+
+/* Стили заголовка и описания внутри задачи */
+.todoList .item h3 {
+    font-size: 1.1rem;
+    color: #1f2937;
+    margin: 0;
+}
+
+.todoList .item p {
+    font-size: 0.9rem;
+    color: #4b5563;
+    word-break: break-word;
+}
+
+/* Состояние выполненной задачи (если item.is_completed передает класс, например "true" или "completed") */
+.todoList .item.true,
+.todoList .item.completed {
+    border-left-color: #10b981;
+    background-color: #fafbfc;
+}
+
+.todoList .item.true h3,
+.todoList .item.completed h3,
+.todoList .item.true p,
+.todoList .item.completed p {
+    color: #9ca3af;
+    text-decoration: line-through;
+}
+
+/* Кнопки управления внутри задачи */
+.todoList .item button {
+    padding: 0.5rem 0.75rem;
+    border: none;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s, opacity 0.2s;
+    margin-right: 0.5rem;
+    margin-top: 0.5rem;
+}
+
+/* Кнопка удаления */
+.todoList .item button[data-action="delete"] {
+    background-color: #fee2e2;
+    color: #dc2626;
+}
+
+.todoList .item button[data-action="delete"]:hover {
+    background-color: #fecaca;
+}
+
+/* Кнопка выполнения */
+.todoList .item button[data-action="complete"] {
+    background-color: #d1fae5;
+    color: #059669;
+}
+
+.todoList .item button[data-action="complete"]:hover {
+    background-color: #a7f3d0;
+}
+
+/* Кнопка редактирования */
+.todoList .item button[data-action="edit"] {
+    background-color: #e0e7ff;
+    color: #4f46e5;
+}
+
+.todoList .item button[data-action="edit"]:hover {
+    background-color: #c7d2fe;
+}

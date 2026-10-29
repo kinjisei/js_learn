@@ -11,6 +11,10 @@ const lengthInput = document.querySelector('#lengthInput')
 const textInputTotal = document.querySelector('#textInputTotal')
 const text = document.querySelector('#text')
 
+const calculator = document.querySelector('#calculator')
+const priceInput = document.querySelector('#priceInput')
+const amountInput = document.querySelector('#amountInput')
+const totalPriceOutput = document.querySelector('#totalPriceOutput')
 
 addPoint.addEventListener('click', function(event) {
     let points = Number(pointCounter.textContent);
@@ -53,5 +57,18 @@ lengthInput.addEventListener('input', function(event) {
 lengthInput.addEventListener('keydown', function(event) {
     if (event.key === 'Enter') {
         textInputTotal.textContent = 'Длина сообщения: ' + event.target.value.length;
+    }
+})
+
+calculator.addEventListener('submit', function(event) {
+    event.preventDefault();
+    let price = Number(priceInput.value);
+    let amount = Number(amountInput.value);
+    if (price <= 0 || amount <= 0) {
+        totalPriceOutput.style.color = 'red'
+        totalPriceOutput.textContent = "Значения должны быть больше нуля!"
+    } else {
+        totalPriceOutput.style.color = 'white'
+        totalPriceOutput.textContent = `К оплате: ${price*amount} ₸`
     }
 })
