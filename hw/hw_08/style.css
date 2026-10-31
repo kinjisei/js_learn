@@ -1,0 +1,126 @@
+/* Общие сбросы и настройки */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+}
+
+body {
+    background-color: #f4f6f9;
+    color: #333;
+    max-width: 600px;
+    margin: 40px auto;
+    padding: 0 20px;
+}
+
+h2 {
+    font-size: 1.25rem;
+    color: #1e293b;
+    margin-bottom: 12px;
+}
+
+/* Форма добавления и блок фильтров */
+form, #filter {
+    background: #ffffff;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+    margin-bottom: 24px;
+}
+
+/* Инпуты и селект */
+input[type="text"], select {
+    width: 100%;
+    padding: 10px 14px;
+    margin-bottom: 12px;
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+input[type="text"]:focus, select:focus {
+    border-color: #4f46e5;
+    box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.15);
+}
+
+/* Кнопки */
+button {
+    background-color: #4f46e5;
+    color: #ffffff;
+    border: none;
+    padding: 10px 16px;
+    font-size: 0.95rem;
+    font-weight: 500;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.2s, transform 0.1s;
+}
+
+button:hover {
+    background-color: #4338ca;
+}
+
+button:active {
+    transform: scale(0.98);
+}
+
+/* Карточки фильмов (создаются через JS) */
+.card {
+    background: #ffffff;
+    padding: 16px;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+    margin-bottom: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    border-left: 4px solid #4f46e5;
+}
+
+.card p {
+    font-size: 1rem;
+    line-height: 1.5;
+    color: #1e293b;
+}
+
+/* Контейнер для кнопок внутри карточки */
+.card button {
+    margin-right: 6px;
+    padding: 6px 12px;
+    font-size: 0.85rem;
+}
+
+/* Цвета для разных кнопок можно настроить по желанию, здесь общий стиль */
+.card button[data-action="delete"] {
+    background-color: #ef4444;
+}
+.card button[data-action="delete"]:hover {
+    background-color: #dc2626;
+}
+
+/* Сообщения об ошибках */
+#message, .errorMessage {
+    color: #ef4444;
+    font-size: 0.875rem;
+    margin-top: -6px;
+    margin-bottom: 12px;
+}
+
+#filtermessage {
+    color: #64748b;
+    font-size: 0.9rem;
+    margin-top: 8px;
+}
+
+/* Счетчик фильмов */
+#movieCounter {
+    margin-top: 16px;
+    font-weight: 600;
+    color: #64748b;
+    font-size: 0.95rem;
+}
+/* Если хочешь выводить счетчик красиво, например "Всего фильмов: X", 
+   можно в JS записывать текст вместе с цифрой */
