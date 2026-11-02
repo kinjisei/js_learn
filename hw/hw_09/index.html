@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div>
+        <input type="text" placeholder="Введите название траты" id="nameExpense">
+        <input type="text" placeholder="Введите стоимость в тенге" id="amountExpense">
+        <select id="categoryExpense">
+            <option value='' disabled selected>Выберите категорю траты</option>
+            <option value="products">Продукты</option>
+            <option value="transport">Транспорт</option>
+            <option value="funny">Развлечения</option>
+            <option value="other">Другое</option>
+        </select>
+        <button id="addExpense">Добавить</button>
+        <div id="messageError"></div>
+    </div>
+    <div id="filter">
+        <select id="filterSelect">
+            <option value='' disabled selected>Выберите категорю траты</option>
+            <option value="all">Все</option>
+            <option value="products">Продукты</option>
+            <option value="transport">Транспорт</option>
+            <option value="funny">Развлечения</option>
+            <option value="other">Другое</option>
+        </select>
+    </div>
+    <div id="expensesList">
+
+    </div>
+
+    <div id="total"></div>
+    <script src="script.js"></script>
+</body>
+
+</html>
