@@ -1,3 +1,6 @@
+import { saveExpenses, loadExpenses } from './storage.js';
+import { renderExpenses } from './ui.js'
+
 const addExpense = document.querySelector('#addExpense');
 const nameExpense = document.querySelector('#nameExpense');
 const amountExpense = document.querySelector('#amountExpense');
@@ -12,22 +15,7 @@ const inputs = [nameExpense, amountExpense];
 
 let expenses = loadExpenses();
 
-const categoryTranslations = {
-    products: 'Продукты',
-    transport: 'Транспорт',
-    funny: 'Развлечения',
-    other: 'Другое'
-};
-
-function saveExpenses() {
-    localStorage.setItem('expenses', JSON.stringify(expenses));
-}
-
-function loadExpenses() {
-    return JSON.parse(localStorage.getItem('expenses')) || [];
-}
 filter();
-// renderExpenses(expenses);
 
 
 function addNewExpense() {
@@ -59,7 +47,7 @@ function addNewExpense() {
     };
 
     expenses.push(expense);
-    saveExpenses();
+    saveExpenses(expenses);
 
 
     nameExpense.value = '';
@@ -68,22 +56,6 @@ function addNewExpense() {
 
     filter();
 };
-
-
-function renderExpenses(array) {
-    expensesList.innerHTML = '';
-    array.forEach(function (item) {
-        let russianCategory = categoryTranslations[item.category] || item.category;
-
-        expensesList.innerHTML += `
-<div>
-    <h3>Трата на: ${item.name}</h3>
-    <span>Стоимость: ${item.amount}</span>
-    <span>Категория: ${russianCategory}</span>
-    <button data-action='delete' data-id='${item.id}'>Удалить</button>
-</div>`;
-    });
-}
 
 addExpense.addEventListener('click', addNewExpense);
 
@@ -96,28 +68,6 @@ inputs.forEach(input => {
     })
 })
 
-function filter() {
-    const selectedValue = filterSelect.value;
-    if (!selectedValue || selectedValue === 'all') {
-        renderExpenses(expenses);
-        const totalsum = expenses.reduce((sum, item) => {
-            return sum + item.amount;
-        }, 0)
-        total.textContent = `Итоговая сумма затрат: ${totalsum}`
-        return;
-    }
-    const filtered = expenses.filter(ex => ex.category === filterSelect.value);
-    if (filtered.length === 0) {
-        expensesList.textContent = 'Пока что пусто ...'
-        total.textContent = `Итоговая сумма затрат: 0`
-    } else {
-        const totalsum = filtered.reduce((sum, item) => {
-            return sum + item.amount;
-        }, 0)
-        renderExpenses(filtered);
-        total.textContent = `Итоговая сумма затрат: ${totalsum}`
-    }
-}
 
 filterSelect.addEventListener('change', filter)
 
@@ -133,4 +83,28 @@ expensesList.addEventListener('click', function (event) {
         })
     }
     filter();
+    saveExpenses(expenses);
 })
+
+function filter() {
+    const selectedValue = filterSelect.value;
+    if (!selectedValue || selectedValue === 'all') {
+        renderExpenses(expenses, expensesList);
+        const totalsum = expenses.reduce((sum, item) => {
+            return sum + item.amount;
+        }, 0)
+        total.textContent = `Итоговая сумма затрат: ${totalsum}₸`
+        return;
+    }
+    const filtered = expenses.filter(ex => ex.category === filterSelect.value);
+    if (filtered.length === 0) {
+        expensesList.textContent = 'Пока что пусто ...'
+        total.textContent = `Итоговая сумма затрат: 0₸`
+    } else {
+        const totalsum = filtered.reduce((sum, item) => {
+            return sum + item.amount;
+        }, 0)
+        renderExpenses(filtered, expensesList);
+        total.textContent = `Итоговая сумма затрат: ${totalsum}₸`
+    }
+}
