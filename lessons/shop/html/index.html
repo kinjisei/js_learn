@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+
+<body>
+
+    <header>
+        <h1>Online Store</h1>
+        <a href="cartPage.html" class="cart-link">Корзина <span id="cartCount">0</span></a>
+    </header>
+    <main>
+        <section class="controls">
+            <input type="text" id="searchInput" placeholder="Введите название товара">
+            <select id="categorySelect">
+                <option value="all">Все категории</option>
+            </select>
+        </section>
+
+        <p id="message"></p>
+        <section id="products" class="products"></section>
+    </main>
+    <script src="../js/main.js" type="module"></script>
+
+</body>
+
+</html>
