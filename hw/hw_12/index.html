@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Кафе «С добрым утром» — отзывы</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>☕</text></svg>">
+    <link rel="stylesheet" href="style.css">
+    <script type="module" src="js/main.js"></script>
+</head>
+
+<body>
+    <header class="header">
+        <div class="container">
+            <h1 class="header__title">☕ Кафе «С добрым утром»</h1>
+            <p class="header__text">Уютное место с кофе из свежей обжарки, домашней выпечкой и завтраками до 16:00.</p>
+        </div>
+    </header>
+
+    <main class="container layout">
+        <section class="panel form-panel" aria-labelledby="form-title">
+            <h2 class="panel__title" id="form-title">Оставить отзыв</h2>
+
+            <form class="review-form" id="review-form" novalidate>
+                <div class="field">
+                    <label class="field__label" for="name">Ваше имя</label>
+                    <input class="field__control" type="text" id="name" name="name" maxlength="60" autocomplete="off">
+                </div>
+
+                <div class="field">
+                    <label class="field__label" for="text">Отзыв</label>
+                    <textarea class="field__control" id="text" name="text" rows="6" maxlength="1000"></textarea>
+                </div>
+
+                <div class="field">
+                    <label class="field__label" for="rating">Оценка</label>
+                    <select class="field__control" id="rating" name="rating">
+                        <option value="1">1 — плохо</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5" selected>5 — отлично</option>
+                    </select>
+                </div>
+
+                <button class="button" type="submit" id="submit-button">Отправить отзыв</button>
+            </form>
+        </section>
+
+        <section class="reviews" aria-labelledby="reviews-title">
+            <h2 class="panel__title" id="reviews-title">Отзывы</h2>
+            <p class="average" id="average" hidden></p>
+            <div class="review-list" id="review-list"></div>
+        </section>
+    </main>
+</body>
+
+</html>
