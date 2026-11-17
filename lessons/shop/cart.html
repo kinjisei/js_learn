@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Корзина — Online Store</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🛒</text></svg>">
+    <link rel="stylesheet" href="css/style.css">
+    <script type="module" src="js/pages/cart.js"></script>
+</head>
+
+<body>
+    <header class="header">
+        <div class="container header__inner">
+            <a class="logo" href="index.html">Online Store</a>
+            <a class="cart-link" href="cart.html" aria-current="page">
+                Корзина
+                <span class="badge" id="cart-count">0</span>
+                <span class="visually-hidden">товаров</span>
+            </a>
+        </div>
+    </header>
+
+    <main class="container page">
+        <div class="page__heading">
+            <h1 class="page__title">Корзина</h1>
+            <a class="back-link" href="index.html">← Вернуться в каталог</a>
+        </div>
+
+        <div class="status" id="status" role="status"></div>
+
+        <div class="cart" id="cart-content" hidden>
+            <ul class="cart-list" id="cart-list"></ul>
+
+            <aside class="summary" aria-labelledby="summary-title">
+                <h2 class="summary__title" id="summary-title">Ваш заказ</h2>
+                <p class="summary__row">
+                    <span>Товары</span>
+                    <span id="summary-count"></span>
+                </p>
+                <p class="summary__row summary__total">
+                    <span>Итого</span>
+                    <span id="summary-total"></span>
+                </p>
+                <button class="button button--danger" type="button" id="clear-cart">Очистить корзину</button>
+            </aside>
+        </div>
+
+        <div class="empty" id="cart-empty" hidden>
+            <p class="empty__title">В корзине пока пусто</p>
+            <p class="empty__text">Добавьте товары из каталога, и они появятся здесь.</p>
+            <a class="button button--primary" href="index.html">Перейти в каталог</a>
+        </div>
+    </main>
+
+    <div class="notice" id="notice" role="status" aria-live="polite"></div>
+
+    <template id="cart-item-template">
+        <li class="cart-item">
+            <div class="cart-item__media media" data-ref="media" aria-hidden="true"></div>
+            <div class="cart-item__info">
+                <h2 class="cart-item__title" data-ref="title"></h2>
+                <p class="cart-item__price" data-ref="price"></p>
+                <p class="cart-item__hint" data-ref="stock-hint" hidden>Больше нет на складе</p>
+            </div>
+            <div class="stepper">
+                <button class="stepper__button" type="button" data-action="decrease" aria-label="Уменьшить количество">−</button>
+                <span class="stepper__value" data-ref="count" aria-live="polite"></span>
+                <button class="stepper__button" type="button" data-action="increase" aria-label="Увеличить количество">+</button>
+            </div>
+            <p class="cart-item__total" data-ref="total"></p>
+            <button class="cart-item__remove button button--ghost" type="button" data-action="remove">Удалить</button>
+        </li>
+    </template>
+</body>
+
+</html>

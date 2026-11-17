@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Post Manager</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📝</text></svg>">
+    <link rel="stylesheet" href="style.css">
+    <script type="module" src="js/main.js"></script>
+</head>
+
+<body>
+    <header class="header">
+        <div class="container">
+            <h1 class="header__title">Post Manager</h1>
+        </div>
+    </header>
+
+    <main class="container layout">
+        <section class="panel form-panel" aria-labelledby="form-title">
+            <h2 class="panel__title" id="form-title">Новый пост</h2>
+
+            <form class="post-form" id="post-form">
+                <div class="field">
+                    <label class="field__label" for="title">Заголовок</label>
+                    <input class="field__control" type="text" id="title" name="title" maxlength="120" placeholder="О чём ваш пост?" autocomplete="off">
+                </div>
+
+                <div class="field">
+                    <label class="field__label" for="content">Текст</label>
+                    <textarea class="field__control" id="content" name="content" rows="7" maxlength="2000" placeholder="Напишите текст поста"></textarea>
+                </div>
+
+                <p class="message" id="form-message" aria-live="polite"></p>
+
+                <div class="post-form__actions">
+                    <button class="button button--primary" type="submit" id="submit-button">Добавить пост</button>
+                    <button class="button" type="button" id="cancel-button" hidden>Отмена</button>
+                </div>
+            </form>
+        </section>
+
+        <section class="posts" aria-labelledby="posts-title">
+            <h2 class="panel__title" id="posts-title">
+                Посты <span class="count" id="post-count">0</span>
+            </h2>
+            <p class="message" id="list-message" aria-live="polite"></p>
+            <div class="post-list" id="post-list"></div>
+        </section>
+    </main>
+
+    <!-- Шаблон поста: JS клонирует его и заполняет через textContent -->
+    <template id="post-template">
+        <article class="post">
+            <h3 class="post__title"></h3>
+            <p class="post__content"></p>
+            <div class="post__actions">
+                <button class="button button--small" type="button" data-action="edit">Редактировать</button>
+                <button class="button button--small button--danger" type="button" data-action="delete">Удалить</button>
+            </div>
+        </article>
+    </template>
+</body>
+
+</html>

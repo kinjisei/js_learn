@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Каталог — Online Store</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🛒</text></svg>">
+    <link rel="stylesheet" href="css/style.css">
+    <!-- type="module" выполняется после разбора HTML, как defer: DOM уже готов -->
+    <script type="module" src="js/pages/catalog.js"></script>
+</head>
+
+<body>
+    <header class="header">
+        <div class="container header__inner">
+            <a class="logo" href="index.html">Online Store</a>
+            <a class="cart-link" href="cart.html">
+                Корзина
+                <span class="badge" id="cart-count">0</span>
+                <span class="visually-hidden">товаров</span>
+            </a>
+        </div>
+    </header>
+
+    <main class="container page">
+        <h1 class="page__title">Каталог</h1>
+
+        <form class="filters" id="filters" role="search">
+            <label class="visually-hidden" for="search">Поиск по названию</label>
+            <input class="field filters__search" type="search" id="search" placeholder="Поиск по названию" autocomplete="off">
+
+            <label class="visually-hidden" for="category">Категория</label>
+            <select class="field" id="category">
+                <option value="all">Все категории</option>
+            </select>
+        </form>
+
+        <div class="status" id="status" role="status"></div>
+        <ul class="product-grid" id="product-list"></ul>
+    </main>
+
+    <div class="notice" id="notice" role="status" aria-live="polite"></div>
+
+    <!-- Шаблон карточки. JS клонирует его и заполняет через textContent -->
+    <template id="product-card-template">
+        <li class="product-card">
+            <div class="product-card__media media" data-ref="media" aria-hidden="true"></div>
+            <div class="product-card__body">
+                <p class="product-card__category" data-ref="category"></p>
+                <h2 class="product-card__title" data-ref="title"></h2>
+                <p class="product-card__description" data-ref="description"></p>
+                <p class="product-card__meta">
+                    <span class="product-card__stock" data-ref="stock"></span>
+                    <span class="product-card__in-cart" data-ref="in-cart" hidden></span>
+                </p>
+            </div>
+            <div class="product-card__footer">
+                <p class="product-card__price" data-ref="price"></p>
+                <button class="button button--primary" type="button" data-action="add">В корзину</button>
+            </div>
+        </li>
+    </template>
+</body>
+
+</html>
