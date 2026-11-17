@@ -1,11 +1,18 @@
-export function renderReviews(container, reviews) {
+// emptyText — что показать, если список пуст (зависит от того, фильтруем мы или нет)
+export function renderReviews(container, reviews, emptyText = 'Пока нет отзывов') {
   if (reviews.length === 0) {
-    container.replaceChildren(createStatus('Пока нет отзывов'));
+    container.replaceChildren(createStatus(emptyText));
     return;
   }
 
   const cards = [...reviews].reverse().map(createReviewCard);
   container.replaceChildren(...cards);
+}
+
+export function renderCounter(element, shown, total) {
+  element.textContent = shown === total
+    ? `Всего отзывов: ${total}`
+    : `Показано: ${shown} из ${total}`;
 }
 
 function createReviewCard(review) {
@@ -30,7 +37,14 @@ function createReviewCard(review) {
   text.className = 'review__text';
   text.textContent = review.text;
 
-  card.append(head, text);
+  const remove = document.createElement('button');
+  remove.type = 'button';
+  remove.className = 'button button--danger';
+  remove.dataset.action = 'delete';
+  remove.textContent = 'Удалить';
+
+  card.dataset.id = review.id;
+  card.append(head, text, remove);
   return card;
 }
 

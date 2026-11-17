@@ -51,6 +51,19 @@
         <section class="reviews" aria-labelledby="reviews-title">
             <h2 class="panel__title" id="reviews-title">Отзывы</h2>
             <p class="average" id="average" hidden></p>
+
+            <div class="toolbar">
+                <select class="field__control" id="rating-filter" aria-label="Фильтр по оценке">
+                    <option value="all" selected>Все отзывы</option>
+                    <option value="5">5 — отлично</option>
+                    <option value="4">4 — хорошо</option>
+                    <option value="3">3 — нормально</option>
+                    <option value="2">2 — плохо</option>
+                    <option value="1">1 — очень плохо</option>
+                </select>
+                <input class="field__control" type="search" id="search" placeholder="Поиск по имени автора" autocomplete="off" aria-label="Поиск по имени">
+            </div>
+            <p class="counter" id="counter"></p>
             <div class="review-list" id="review-list"></div>
         </section>
     </main>
