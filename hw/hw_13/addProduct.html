@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form id="productForm">
+        <input type="text" placeholder="Титут" name="title" required>
+        <input type="text" placeholder="Описание" name="description" required>
+        <input type="text" placeholder="Категория" name="category" required>
+        <input type="number" placeholder="Цена" name="price" required>
+        <input type="number" placeholder="Количество на складе" name="quantity" required>
+        <input type="file" name="image" required>
+        <button type="submit" id="addProductBtn">Добавить продукт</button>
+    </form>
+    <p id="message"></p>
+    <script src="./js/addProduct.js" type="module"></script>
+</body>
+</html>

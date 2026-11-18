@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Каталог игр</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <header class="header">
+        <div class="container">
+            <h1 class="header__title">Каталог игр</h1>
+            <button class="button button--ghost" type="button" id="theme-toggle">Тёмная тема</button>
+        </div>
+    </header>
+
+    <main class="container layout">
+        <section class="panel form-panel" aria-labelledby="form-title">
+            <h2 class="panel__title" id="form-title">Добавить игру</h2>
+
+            <form class="game-form" id="game-form" novalidate>
+                <div class="field">
+                    <label class="field__label" for="title">Название</label>
+                    <input class="field__control" type="text" id="title" name="title" maxlength="80" autocomplete="off">
+                </div>
+
+                <div class="field">
+                    <label class="field__label" for="genre">Жанр</label>
+                    <select class="field__control" id="genre" name="genre">
+                        <option value="">Выберите жанр</option>
+                        <option value="RPG">RPG</option>
+                        <option value="Action">Action</option>
+                        <option value="Strategy">Strategy</option>
+                        <option value="Adventure">Adventure</option>
+                        <option value="Shooter">Shooter</option>
+                        <option value="Simulator">Simulator</option>
+                    </select>
+                </div>
+
+                <div class="field">
+                    <label class="field__label" for="year">Год выпуска</label>
+                    <input class="field__control" type="number" id="year" name="year" min="1970" max="2027">
+                </div>
+
+                <div class="field">
+                    <label class="field__label" for="rating">Рейтинг (0–10)</label>
+                    <input class="field__control" type="number" id="rating" name="rating" min="0" max="10" step="0.1">
+                </div>
+
+                <div class="field">
+                    <label class="field__label" for="description">Описание</label>
+                    <textarea class="field__control" id="description" name="description" rows="4" maxlength="500"></textarea>
+                </div>
+
+                <button class="button" type="submit" id="submit-button">Добавить игру</button>
+                <p id="message"></p>
+            </form>
+        </section>
+
+        <section class="games" aria-labelledby="games-title">
+            <h2 class="panel__title" id="games-title">Игры</h2>
+
+            <div class="toolbar">
+                <select class="field__control" id="genre-filter" aria-label="Фильтр по жанру">
+                    <option value="all" selected>Все жанры</option>
+                    <option value="RPG">RPG</option>
+                    <option value="Action">Action</option>
+                    <option value="Strategy">Strategy</option>
+                    <option value="Adventure">Adventure</option>
+                    <option value="Shooter">Shooter</option>
+                    <option value="Simulator">Simulator</option>
+                </select>
+                <input class="field__control" type="search" id="search" placeholder="Поиск по названию" autocomplete="off" aria-label="Поиск по названию">
+                <label class="toolbar__check">
+                    <input type="checkbox" id="favorites-only"> Только избранное
+                </label>
+            </div>
+
+            <p class="counter" id="counter"></p>
+            <div class="game-list" id="game-list"></div>
+        </section>
+    </main>
+    <script type="module" src="js/main.js"></script>
+</body>
+
+</html>

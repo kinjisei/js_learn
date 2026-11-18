@@ -1,0 +1,293 @@
+:root {
+    --bg: #f4f5f7;
+    --surface: #ffffff;
+    --text: #1f2430;
+    --muted: #6b7280;
+    --border: #d9dce3;
+    --accent: #4f46e5;
+    --accent-hover: #4338ca;
+    --danger: #dc2626;
+    --star: #f59e0b;
+}
+
+/* Тёмная тема: JS ставит <body class="dark"> или <html data-theme="dark"> */
+body.dark {
+    --bg: #14161c;
+    --surface: #1e222b;
+    --text: #e8eaf0;
+    --muted: #9aa1b2;
+    --border: #333947;
+    --accent: #818cf8;
+    --accent-hover: #6366f1;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    line-height: 1.5;
+    background: var(--bg);
+    color: var(--text);
+}
+
+.container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 0 16px;
+}
+
+/* ---------- header ---------- */
+.header {
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+}
+
+.header .container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 16px;
+    padding-bottom: 16px;
+}
+
+.header__title {
+    margin: 0;
+    font-size: 24px;
+}
+
+/* ---------- layout ---------- */
+.layout {
+    display: grid;
+    grid-template-columns: 340px 1fr;
+    gap: 24px;
+    align-items: start;
+    padding-top: 24px;
+    padding-bottom: 40px;
+}
+
+.panel {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 20px;
+}
+
+.panel__title {
+    margin: 0 0 16px;
+    font-size: 20px;
+}
+
+/* ---------- form ---------- */
+.field {
+    margin-bottom: 14px;
+}
+
+.field__label {
+    display: block;
+    margin-bottom: 4px;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.field__control {
+    width: 100%;
+    padding: 9px 12px;
+    font: inherit;
+    color: var(--text);
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+}
+
+.field__control:focus {
+    outline: 2px solid var(--accent);
+    outline-offset: 0;
+    border-color: var(--accent);
+}
+
+textarea.field__control {
+    resize: vertical;
+}
+
+/* JS добавляет .field--error к .field при ошибке валидации */
+.field--error .field__control {
+    border-color: var(--danger);
+}
+
+.field__error {
+    margin: 4px 0 0;
+    font-size: 13px;
+    color: var(--danger);
+}
+
+/* ---------- buttons ---------- */
+.button {
+    padding: 9px 16px;
+    font: inherit;
+    font-weight: 600;
+    color: #fff;
+    background: var(--accent);
+    border: 1px solid var(--accent);
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.button:hover {
+    background: var(--accent-hover);
+}
+
+.button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.button--ghost {
+    color: var(--text);
+    background: transparent;
+    border-color: var(--border);
+}
+
+.button--ghost:hover {
+    background: var(--bg);
+}
+
+.button--danger {
+    color: var(--danger);
+    background: transparent;
+    border-color: var(--danger);
+}
+
+.button--danger:hover {
+    color: #fff;
+    background: var(--danger);
+}
+
+.button--small {
+    padding: 4px 10px;
+    font-size: 13px;
+}
+
+/* ---------- games ---------- */
+.toolbar {
+    display: grid;
+    grid-template-columns: 160px 1fr auto;
+    gap: 10px;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.toolbar__check {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 14px;
+    white-space: nowrap;
+}
+
+.counter {
+    margin: 0 0 12px;
+    font-size: 14px;
+    color: var(--muted);
+}
+
+.game-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 12px;
+}
+
+/* карточка игры: <article class="game-card"> */
+.game-card {
+    display: flex;
+    flex-direction: column;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px;
+}
+
+.game-card__head {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 8px;
+}
+
+.game-card__title {
+    margin: 0;
+    font-size: 18px;
+}
+
+.game-card__rating {
+    color: var(--star);
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+.game-card__meta {
+    margin: 4px 0 8px;
+    font-size: 14px;
+    color: var(--muted);
+}
+
+.game-card__genre {
+    display: inline-block;
+    padding: 1px 8px;
+    margin-right: 6px;
+    font-size: 12px;
+    color: var(--accent);
+    border: 1px solid var(--accent);
+    border-radius: 999px;
+}
+
+.game-card__text {
+    flex: 1;
+    margin: 0 0 12px;
+    word-break: break-word;
+}
+
+.game-card__actions {
+    display: flex;
+    gap: 8px;
+}
+
+/* кнопка-звезда; JS добавляет .is-active, когда игра в избранном */
+.fav-button {
+    font-size: 20px;
+    line-height: 1;
+    color: var(--muted);
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+.fav-button.is-active {
+    color: var(--star);
+}
+
+/* сообщения «пусто» / «загрузка» / «ошибка» */
+.message {
+    padding: 24px;
+    text-align: center;
+    color: var(--muted);
+    border: 1px dashed var(--border);
+    border-radius: 10px;
+}
+
+.message--error {
+    color: var(--danger);
+    border-color: var(--danger);
+}
+
+@media (max-width: 800px) {
+    .layout {
+        grid-template-columns: 1fr;
+    }
+
+    .toolbar {
+        grid-template-columns: 1fr;
+    }
+}
