@@ -1,6 +1,7 @@
 import { getGames, updateGame, deleteGame, createGame } from './api.js';
-import { renderGames } from './ui.js'
+import { renderGames, renderMessage } from './ui.js';
 import { getTheme, saveTheme } from './storage.js';
+import { GENRES, MIN_YEAR, MAX_YEAR, MIN_RATING, MAX_RATING } from './config.js';
 
 const title = document.querySelector('#title');
 const gameForm = document.querySelector('#game-form');
@@ -14,76 +15,48 @@ const favoritesOnly = document.querySelector('#favorites-only');
 const counter = document.querySelector('#counter');
 const gameList = document.querySelector('#game-list');
 const message = document.querySelector('#message');
+const submitButton = document.querySelector('#submit-button');
 const themeToggle = document.querySelector('#theme-toggle');
-
-const MIN_YEAR = 1970;
-const MAX_YEAR = 2027;
 
 let games = [];
 let editingId = null;
 
-gameForm.addEventListener('submit', addNewGame);
-search.addEventListener('input', render);
-genreFilter.addEventListener('change', render);
-favoritesOnly.addEventListener('change', render);
-title.addEventListener('input', clearMessage);
-genre.addEventListener('change', clearMessage);
-year.addEventListener('input', clearMessage);
-description.addEventListener('input', clearMessage);
-rating.addEventListener('input', clearMessage);
-themeToggle.addEventListener('click', toggleTheme);
-
-async function loadGames() {
-    games = await getGames();
-    render();
+function fillGenres() {
+    GENRES.forEach(name => {
+        genre.append(new Option(name, name));
+        genreFilter.append(new Option(name, name));
+    });
 }
 
-loadGames();
-initTheme();
+function setLimits() {
+    year.min = MIN_YEAR;
+    year.max = MAX_YEAR;
+    rating.min = MIN_RATING;
+    rating.max = MAX_RATING;
+}
+
+function showMessage(text, isError = true) {
+    message.textContent = text;
+    message.classList.toggle('form-message--error', isError);
+}
 
 function clearMessage() {
-    message.textContent = '';
+    showMessage('');
 }
 
 function validate(data) {
     if (!data.title || !data.genre || data.year === '' || data.rating === '' || !data.description) {
         return 'Все поля должны быть заполнены!';
     }
-    if (data.rating < 0 || data.rating > 10) {
-        return 'Рейтинг должен быть от 0 до 10';
+    const yearValue = Number(data.year);
+    const ratingValue = Number(data.rating);
+    if (Number.isNaN(ratingValue) || ratingValue < MIN_RATING || ratingValue > MAX_RATING) {
+        return `Рейтинг должен быть от ${MIN_RATING} до ${MAX_RATING}`;
     }
-    if (data.year < MIN_YEAR || data.year > MAX_YEAR) {
-        return `Год выпуска должен быть от ${MIN_YEAR} до ${MAX_YEAR}`;
+    if (!Number.isInteger(yearValue) || yearValue < MIN_YEAR || yearValue > MAX_YEAR) {
+        return `Год выпуска должен быть целым числом от ${MIN_YEAR} до ${MAX_YEAR}`;
     }
     return '';
-}
-
-async function addNewGame(event) {
-    event.preventDefault();
-
-    const game = {
-        title: title.value.trim(),
-        genre: genre.value.trim(),
-        year: year.value,
-        rating: rating.value,
-        description: description.value.trim()
-    };
-
-    const error = validate(game);
-    if (error) {
-        message.textContent = error;
-        return;
-    }
-
-    game.year = Number(game.year);
-    game.rating = Number(game.rating);
-    game.favorite = false;
-
-    const created = await createGame(game);
-    games.push(created);
-    gameForm.reset();
-    clearMessage();
-    render();
 }
 
 function render() {
@@ -91,7 +64,10 @@ function render() {
     const searched = search.value.trim().toLowerCase();
 
     const filtered = games.filter(game => {
-        return (selected === 'all' || game.genre === selected) && game.title.toLowerCase().includes(searched) && (!favoritesOnly.checked || game.favorite);
+        const matchesGenre = selected === 'all' || game.genre === selected;
+        const matchesTitle = game.title.toLowerCase().includes(searched);
+        const matchesFavorite = !favoritesOnly.checked || game.favorite;
+        return matchesGenre && matchesTitle && matchesFavorite;
     });
 
     counter.textContent = `Показано: ${filtered.length} из ${games.length}`;
@@ -100,24 +76,75 @@ function render() {
     renderGames(filtered, editingId, emptyText);
 }
 
-gameList.addEventListener('click', async (event) => {
-    const btn = event.target.closest('button[data-action]');
-    if (!btn) return;
+async function loadGames() {
+    renderMessage('Загрузка...');
+    try {
+        games = await getGames();
+        render();
+    } catch (error) {
+        counter.textContent = '';
+        renderMessage(`Не удалось загрузить игры. ${error.message}`, true);
+    }
+}
 
-    const card = btn.closest('.game');
-    const id = card.dataset.id;
-    const action = btn.dataset.action;
+async function addNewGame(event) {
+    event.preventDefault();
+
+    const game = {
+        title: title.value.trim(),
+        genre: genre.value,
+        year: year.value,
+        rating: rating.value,
+        description: description.value.trim()
+    };
+
+    const error = validate(game);
+    if (error) {
+        showMessage(error);
+        return;
+    }
+
+    submitButton.disabled = true;
+    try {
+        const created = await createGame({
+            ...game,
+            year: Number(game.year),
+            rating: Number(game.rating),
+            favorite: false
+        });
+        games.push(created);
+        gameForm.reset();
+        showMessage('Игра добавлена', false);
+        render();
+    } catch (err) {
+        showMessage(`Не удалось добавить игру. ${err.message}`);
+    } finally {
+        submitButton.disabled = false;
+    }
+}
+
+function readEditForm(card) {
+    return {
+        title: card.querySelector('.editTitle').value.trim(),
+        genre: card.querySelector('.editGenre').value,
+        year: card.querySelector('.editYear').value,
+        rating: card.querySelector('.editRating').value,
+        description: card.querySelector('.editDescription').value.trim()
+    };
+}
+
+async function handleAction(action, id, card) {
+    const game = games.find(item => item.id === id);
 
     if (action === 'delete') {
         await deleteGame(id);
-        games = games.filter(g => g.id !== id);
+        games = games.filter(item => item.id !== id);
         if (editingId === id) editingId = null;
     }
 
     if (action === 'favorite') {
-        const game = games.find(g => g.id === id);
         const saved = await updateGame(id, { ...game, favorite: !game.favorite });
-        games = games.map(g => g.id === id ? saved : g);
+        games = games.map(item => item.id === id ? saved : item);
     }
 
     if (action === 'edit') {
@@ -126,42 +153,54 @@ gameList.addEventListener('click', async (event) => {
 
     if (action === 'cancel') {
         editingId = null;
-        clearMessage();
     }
 
     if (action === 'save') {
-        const edited = {
-            title: card.querySelector('.editTitle').value.trim(),
-            genre: card.querySelector('.editGenre').value.trim(),
-            year: card.querySelector('.editYear').value,
-            rating: card.querySelector('.editRating').value,
-            description: card.querySelector('.editDescription').value.trim()
-        };
-
+        const edited = readEditForm(card);
         const error = validate(edited);
         if (error) {
-            message.textContent = error;
-            return;
+            card.querySelector('.field__error').textContent = error;
+            return false;
         }
 
-        const updated = {
-            ...games.find(g => g.id === id),
+        const saved = await updateGame(id, {
+            ...game,
             ...edited,
             year: Number(edited.year),
             rating: Number(edited.rating)
-        };
-
-        const saved = await updateGame(id, updated);
-        games = games.map(g => g.id === id ? saved : g);
+        });
+        games = games.map(item => item.id === id ? saved : item);
         editingId = null;
-        clearMessage();
     }
 
-    render();
-});
+    return true;
+}
 
-function initTheme() {
-    applyTheme(getTheme() === 'dark');
+async function onListClick(event) {
+    const button = event.target.closest('button[data-action]');
+    if (!button) return;
+
+    const card = button.closest('.game-card');
+    button.disabled = true;
+
+    try {
+        const changed = await handleAction(button.dataset.action, card.dataset.id, card);
+        if (changed) render();
+    } catch (error) {
+        const errorBox = card.querySelector('.field__error');
+        if (errorBox) {
+            errorBox.textContent = error.message;
+        } else {
+            showMessage(error.message);
+        }
+    } finally {
+        button.disabled = false;
+    }
+}
+
+function applyTheme(dark) {
+    document.body.classList.toggle('dark', dark);
+    themeToggle.textContent = dark ? 'Светлая тема' : 'Тёмная тема';
 }
 
 function toggleTheme() {
@@ -170,7 +209,16 @@ function toggleTheme() {
     applyTheme(dark);
 }
 
-function applyTheme(dark) {
-    document.body.classList.toggle('dark', dark);
-    themeToggle.textContent = dark ? 'Светлая тема' : 'Тёмная тема';
-}
+[title, year, rating, description].forEach(control => control.addEventListener('input', clearMessage));
+genre.addEventListener('change', clearMessage);
+gameForm.addEventListener('submit', addNewGame);
+search.addEventListener('input', render);
+genreFilter.addEventListener('change', render);
+favoritesOnly.addEventListener('change', render);
+gameList.addEventListener('click', onListClick);
+themeToggle.addEventListener('click', toggleTheme);
+
+fillGenres();
+setLimits();
+applyTheme(getTheme() === 'dark');
+loadGames();

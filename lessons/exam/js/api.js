@@ -29,5 +29,5 @@ export async function updateGame(id, game) {
 }
 
 export async function deleteGame(id) {
-    return request(`${BASE_URL}/${id}`, {method: 'DELETE'});
+    return request(`${BASE_URL}/${id}`, { method: 'DELETE' });
 }
